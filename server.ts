@@ -15,6 +15,8 @@ app.use(express.json({ extended: false }));
 app.use(cors());
 
 // ROUTES
+app.use("/api/images", require("./routes/imageRoute"));
+
 app.get("/", (req: any, res: any) => {
   // console.log("Hello world");
   return res.status(200).json({ message: "Image palette application" });
