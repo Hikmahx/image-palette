@@ -16,6 +16,7 @@ app.use(cors());
 
 // ROUTES
 app.use("/api/images", require("./routes/imageRoute"));
+app.use("/api/svgs", require("./routes/svgRoute"));
 
 app.get("/", (req: any, res: any) => {
   // console.log("Hello world");
