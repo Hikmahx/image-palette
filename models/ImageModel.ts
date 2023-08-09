@@ -6,8 +6,8 @@ const imageSchema = new mongoose.Schema({
   mimetype: String,
   size: Number,
   uploadDate: { type: Date, default: Date.now },
-  imageType: { type: String, enum: ["svg", "png", "jpeg", "jpg"] },
-  color: String
+  // imageType: { type: String, enum: ["svg", "png", "jpeg", "jpg"] },
+  bgColor: String
 });
 
 const ImageModel = mongoose.model("Image", imageSchema);
