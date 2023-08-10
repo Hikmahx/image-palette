@@ -3,8 +3,8 @@ import { body } from "express-validator";
 import {
   uploadSvg,
   handleSvgUpload,
-  getSvgColors,
-  updateSvgColors,
+  getSvgColor,
+  updateSvgColor,
 } from "../controllers/svgController";
 
 const router = express.Router();
@@ -16,11 +16,10 @@ router.post(
   handleSvgUpload
 );
 
-router.get("/svg-colors/:id", getSvgColors);
+router.get("/svg-colors/:id", getSvgColor);
 router.put(
-  "/update-svg-colors/:id",
-  body("colors", "Please provide svg colors"),
-  updateSvgColors
+  "/svg-colors/:id",
+  updateSvgColor
 );
 
 module.exports = router;
