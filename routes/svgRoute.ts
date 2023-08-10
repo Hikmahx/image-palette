@@ -3,6 +3,7 @@ import { body } from "express-validator";
 import {
   uploadSvg,
   handleSvgUpload,
+  getSvgDetails,
   getSvgColor,
   updateSvgColor,
 } from "../controllers/svgController";
@@ -16,10 +17,10 @@ router.post(
   handleSvgUpload
 );
 
+router.get("/:id", getSvgDetails);
+
 router.get("/svg-colors/:id", getSvgColor);
-router.put(
-  "/svg-colors/:id",
-  updateSvgColor
-);
+
+router.put("/svg-colors/:id", updateSvgColor);
 
 module.exports = router;

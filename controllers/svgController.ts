@@ -45,17 +45,17 @@ export const handleSvgUpload = async (req: Request, res: Response) => {
 
     const { color } = req.body;
 
-    if (!color) {
-      return res.status(400).json({ error: "Please provide a color" });
-    }
+    // if (!color) {
+    //   return res.status(400).json({ error: "Please provide a color" });
+    // }
 
     const $ = cheerio.load(content, { xmlMode: true });
 
     // Find all elements with a fill attribute
     $("[fill]").each((index: number, element: any) => {
-      // If the fill attribute is not 'none', update it with the provided color
+      // If the fill attribute is not 'none' and a color is provided, update it with the provided color
       const fillValue = $(element).attr("fill");
-      if (fillValue !== "none") {
+      if (fillValue !== "none" && color) {
         $(element).attr("fill", color);
       }
     });
@@ -70,21 +70,21 @@ export const handleSvgUpload = async (req: Request, res: Response) => {
     });
     await svg.save();
 
-    // Update the SVG file in the uploads folder
-    // const filePath = path.join('uploads', `${svg.name}.svg`);
-    // const filePath = path.resolve(__dirname, '..', 'uploads', `${svg.name}.svg`);
-    const filePath = `uploads/${svg.name}`;
-
-    await fs.writeFile(filePath, modifiedSvgContent);
+    // // Only upload the SVG file to the folder if a color is provided
+    // if (color) {
+      const filePath = `uploads/${svg.name}`;
+      await fs.writeFile(filePath, modifiedSvgContent);
+    // }
 
     res
       .status(201)
-      .json({ message: "SVG uploaded and color set successfully", svg });
+      .json({ message: `${color? 'SVG uploaded and color set successfully' : 'SVG uploaded'}`, svg });
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: "Internal Server Error" });
   }
 };
+
 
 export const getSvgColor = async (req: Request, res: Response) => {
   try {
@@ -119,6 +119,17 @@ export const getSvgColor = async (req: Request, res: Response) => {
   }
 };
 
+export const getSvgDetails = async (req:Request, res:Response) => {
+  const svgId = req.params.id;
+  const svg = await SVGModel.findById(svgId);
+
+  if (!svg) {
+    return res.status(404).json({ error: "SVG not found" });
+  }
+
+  res.status(200).json( svg );
+}
+
 export const updateSvgColor = async (req: Request, res: Response) => {
   try {
     const svgId = req.params.id;
@@ -129,6 +140,34 @@ export const updateSvgColor = async (req: Request, res: Response) => {
     if (!svg) {
       return res.status(404).json({ error: "SVG not found" });
     }
+
+    if (!color) {
+      return res.status(400).json({ error: "Please provide a color" });
+    }
+
+    // const { content } = res;
+    // const content = await fs.readFile(svg.content, "utf-8");
+    const filePath = `uploads/${svg.name}`;
+    const content = await fs.readFile(filePath, "utf-8");
+
+
+    const $ = cheerio.load(content, { xmlMode: true });
+
+    // UPDATE SVG FILE COLOR 
+    // Find all elements with a fill attribute
+    $("[fill]").each((index: number, element: any) => {
+      // If the fill attribute is not 'none', update it with the provided color
+      const fillValue = $(element).attr("fill");
+      if (fillValue !== "none") {
+        $(element).attr("fill", color);
+      }
+    });
+
+    const modifiedSvgContent = $.html();
+    
+    // Update the SVG file in the uploads folder
+    // const filePath = `uploads/${svg.name}`;
+    await fs.writeFile(filePath, modifiedSvgContent);
 
     // Update the color field in the SVG model
     svg.color = color;
