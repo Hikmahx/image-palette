@@ -1,27 +1,24 @@
-import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
-import { useFonts, Poppins_900Black } from '@expo-google-fonts/poppins';
+import React from "react";
+import { View, Text, StyleSheet } from "react-native";
+import {
+  useFonts,
+  Poppins_800ExtraBold,
+  Poppins_400Regular,
+} from "@expo-google-fonts/poppins";
+import { NavigationContainer } from "@react-navigation/native";
+import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
+import tw from "twrnc";
+import AppNavigator from "./navigation/AppNavigator";
 
 export default function App() {
   let [fontsLoaded, fontError] = useFonts({
-    Poppins_900Black,
+    Poppins_800ExtraBold,
+    Poppins_400Regular,
   });
 
   if (!fontsLoaded && !fontError) {
     return null;
   }
 
-  return (
-    <View style={styles.container}>
-      <Text style={{ fontFamily: 'Poppins_900Black', fontSize: 40 }}>Poppins</Text>
-    </View>
-  );
+  return <AppNavigator />;
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-});
