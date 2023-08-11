@@ -5,32 +5,40 @@ import SvgScreen from "../screens/SvgScreen";
 import OtherImagesScreen from "../screens/OtherImagesScreen";
 import { View, Text } from "react-native";
 import tw from "twrnc";
+import {
+  Poppins_800ExtraBold,
+} from "@expo-google-fonts/poppins";
 
 const Tab = createMaterialTopTabNavigator();
 
 const AppNavigator = () => {
   return (
     <NavigationContainer>
-      <View style={tw`flex-1`}>
-        <View style={tw`flex items-center justify-center m-8 py-16`}>
-          <Text>This is the header</Text>
+      <View style={tw`flex-1 bg-blue-500`}>
+        <View style={tw`flex items-center justify-center m-8 py-16 bg-blue-500`}>
+          <Text style={[tw`uppercase text-white text-xl`, {fontFamily: 'Poppins_800ExtraBold' }]}>svg gallery</Text>
         </View>
 
         <Tab.Navigator
           screenOptions={{
-            tabBarActiveTintColor: "blue",
-            tabBarInactiveTintColor: "black",
+            tabBarActiveTintColor: "black",
+            tabBarInactiveTintColor: "white",
             tabBarIndicatorStyle: {
-              backgroundColor: "red",
-              borderBlockColor: "#000",
+              backgroundColor: "white",
+              // borderBlockColor: "#000",
               borderBottomColor: "transparent",
-              borderWidth: 1,
+              borderWidth: 0,
               borderTopLeftRadius: 10,
               borderTopRightRadius: 10,
               borderColor: "black",
               // backfaceVisibility: "hidden",
-              height: 40,
-              borderBottomWidth: 0, // Add a bottom border for inactive tabs
+              height: 50,
+              borderBottomWidth: 0, 
+              paddingBottom: 50,
+              // paddingTop: 50,
+              marginTop: 50,
+              overflow: "hidden",
+              
             },
             tabBarIndicatorContainerStyle:{
 
@@ -39,14 +47,16 @@ const AppNavigator = () => {
             tabBarLabelStyle: {
               fontSize: 12,
               // backgroundColor: "white",
-              paddingHorizontal: 30,
+              paddingHorizontal: 50,
               paddingVertical: 5,
-              margin: 0,
+              fontWeight: "normal",
+              // margin: 10,
             },
             tabBarStyle: {
               // paddingVertical: 22,
-              // backgroundColor: "#5858A0",
-              borderBottomWidth: 2, // Add a bottom border for inactive tabs
+              // backgroundColor: "#3b82f6",
+              backgroundColor: "transparent",
+              borderBottomWidth: 0, 
             },
             tabBarItemStyle: {
               borderBottomWidth: 0,
