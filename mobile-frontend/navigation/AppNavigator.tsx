@@ -57,6 +57,7 @@ const AppNavigator = () => {
               // backgroundColor: "#3b82f6",
               backgroundColor: "transparent",
               borderBottomWidth: 0, 
+              shadowColor: 'transparent',
             },
             tabBarItemStyle: {
               borderBottomWidth: 0,
