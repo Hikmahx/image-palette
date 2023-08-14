@@ -9,6 +9,8 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 import tw from "twrnc";
 import AppNavigator from "./navigation/AppNavigator";
+import { Provider } from "react-redux";
+import { store } from "./redux/store";
 
 export default function App() {
   let [fontsLoaded, fontError] = useFonts({
@@ -20,5 +22,9 @@ export default function App() {
     return null;
   }
 
-  return <AppNavigator />;
+  return (
+    <Provider store={store}>
+      <AppNavigator />
+    </Provider>
+  );
 }
