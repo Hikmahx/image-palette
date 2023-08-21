@@ -1,15 +1,18 @@
 import { View, Text, Image, TouchableOpacity, Button } from "react-native";
-import React, { useState } from "react";
+import React from "react";
 import tw from "twrnc";
 import UploadBtn from "./UploadBtn";
 import ImageUpload from "../assets/svg/image-upload.svg";
+import { useSelector, useDispatch } from "react-redux";
+import { RootState } from "../redux/store";
+import SvgUri from "react-native-svg-uri";
 
 const FileUpload = () => {
+  const { image } = useSelector((state: RootState) => state.upload);
 
-  
   return (
     <View
-      style={tw`bg-white flex-1 max-w-xl px-8 py-9 m-4 min-h-full flex flex-col items-center rounded-xl m-2`}
+      style={tw`bg-white flex-1 max-w-xl w-full px-8 py-9 m-4 min-h-full flex flex-col items-center rounded-xl m-2`}
     >
       <View style={tw`w-full`}>
         <View style={tw`upload-wrapper flex flex-col items-center`}>
@@ -23,37 +26,44 @@ const FileUpload = () => {
           </Text>
           <Text
             style={[
-              tw`text-xs text-gray mb-6`,
+              tw`text-xs text-gray-400 mb-6`,
               { fontFamily: "Poppins_400Regular" },
             ]}
           >
-            File should be Jpeg, Png,...
+            File should be Svg
           </Text>
           <View
-            style={tw`w-full h-56 p-6 rounded-lg bg-grayish-blue border-2 border-dashed border-pale-blue-border flex flex-col items-center`}
+            style={tw`w-full h-48 p-6 rounded-lg bg-grayish-blue border-2 border-dashed border-gray-400 flex flex-col items-center`}
           >
-            <View style={tw`img-wrapper w-2/5 mb-5`}>
-              {/* <Image source={{uri:'../assets/image-upload.svg'}} alt="upload an image" style={tw`w-full`} /> */}
-              <ImageUpload  width={'100%'} height={'100%'}/>
-              
+            <View
+              style={tw`w-full flex-1 flex items-center justify-center`}
+              >
+              {image ? (
+                <>
+                  {/* <Image
+                    source={{ uri: image }}
+                    style={tw`w-full rounded-xl flex-1 flex items-center justify-center m-auto`}
+
+                  /> */}
+                  <SvgUri
+                    width="100%"
+                    height="100%"
+                    source={{ uri: image.uri }} // Use the URI of the selected SVG image
+                  />
+                </>
+              ) : (
+
+                  <ImageUpload
+                    width={"100%"}
+                    height={"100%"}
+                    style={tw`w-full flex items-center justify-center m-auto`}
+                  />
+              )}
             </View>
           </View>
-          <Text style={tw`text-light-gray m-6 text-xs`}>Or</Text>
           <TouchableOpacity
-            style={tw`bg-blue text-white px-4 h-8 relative rounded-md text-xs flex items-center justify-center cursor-pointer hover:border-blue hover:border-1 hover:bg-white hover:text-blue transition-all`}
+            style={tw`bg-blue text-white mt-6 px-4 relative rounded-md text-xs flex items-center justify-center cursor-pointer hover:border-blue hover:border-1 hover:bg-white hover:text-blue transition-all`}
           >
-            <Text style={tw`m-auto`}>Choose a file</Text>
-            {/* {fileResponse.map((file, index) => (
-              <Text
-                key={index.toString()}
-                style={StyleSheet.uri}
-                numberOfLines={1}
-                ellipsizeMode={"middle"}
-              >
-                {file?.uri}
-              </Text>
-            ))} */}
-            {/* <Button title="Select 📑" onPress={handleDocumentSelection} /> */}
             <UploadBtn />
           </TouchableOpacity>
         </View>
