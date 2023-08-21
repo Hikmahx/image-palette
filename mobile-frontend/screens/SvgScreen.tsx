@@ -6,7 +6,7 @@ import tw from 'twrnc';
 const SvgScreen = () => {
   return (
     <ScrollView>
-    <View style={tw`flex items-center mt-8`}>
+    <View style={tw`flex items-center my-8 px-6`}>
       <FileUpload />
     </View>
     </ScrollView>
