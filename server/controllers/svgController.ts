@@ -28,6 +28,8 @@ const upload = multer({ storage: storage });
 export const uploadSvg = upload.single("svg");
 
 export const handleSvgUpload = async (req: Request, res: Response) => {
+  // NOTE: THERE IS A BUG WHICH THERE SEEIGN THERE IS AN EXISTING SVG WITH THE SAME NAME. IT CAUSES THE COLOR TO CHANGE TO THE INITIAL COLOR
+  // FIX IT LATER
   try {
     if (!req.file) {
       return res.status(400).json({ error: "No image file provided" });
